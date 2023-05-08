@@ -3,7 +3,33 @@ class Calculator {
     this.previousOperandTextElement = previousOperandTextElement
     this.currentOperandTextElement = currentOperandTextElement
     this.clear()
+    document.addEventListener('keydown', this.handleKeyDown.bind(this))
+}
+
+handleKeyDown(event) {
+  const { key } = event
+  if (/\d/.test(key)) {
+    // Number keys
+    this.appendNumber(key)
+    this.updateDisplay()
+  } else if (/[+\-*/]/.test(key)) {
+    // Operation keys
+    this.chooseOperation(key)
+    this.updateDisplay()
+  } else if (key === 'Enter' || key === '=') {
+    // Equals key
+    this.compute()
+    this.updateDisplay()
+  } else if (key === 'Backspace') {
+    // Delete key
+    this.delete()
+    this.updateDisplay()
+  } else if (key === 'Escape' || key === 'AC') {
+    // All clear key
+    this.clear()
+    this.updateDisplay()
   }
+}
 
   clear() {
     this.currentOperand = ''
