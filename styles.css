@@ -1,13 +1,13 @@
 *, *::before, *::after {
   box-sizing: border-box;
-  font-family: Gotham Rounded, sans-serif;
-  font-weight: normal;
+  font-family: 'Roboto', sans-serif;
+  font-weight: 400;
 }
 
 body {
   padding: 0;
   margin: 0;
-  background: linear-gradient(to right, #00AAFF, #00FF6C);
+  background: #F9FAFB;
 }
 
 .calculator-grid {
@@ -15,20 +15,31 @@ body {
   justify-content: center;
   align-content: center;
   min-height: 100vh;
-  grid-template-columns: repeat(4, 100px);
-  grid-template-rows: minmax(120px, auto) repeat(5, 100px);
+  grid-template-columns: repeat(4, 80px);
+  grid-template-rows: minmax(120px, auto) repeat(5, 80px);
+  grid-gap: 10px;
+  margin: 30px auto;
+  max-width: 320px;
 }
 
 .calculator-grid > button {
   cursor: pointer;
-  font-size: 2rem;
-  border: 1px solid white;
+  font-size: 1.5rem;
+  border: none;
   outline: none;
-  background-color: rgba(255, 255, 255, .75);
+  background-color: #FFFFFF;
+  color: #4A4A4A;
+  border-radius: 50%;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .calculator-grid > button:hover {
-  background-color: rgba(255, 255, 255, .9);
+  background-color: #ECEFF1;
+  color: #00ACC1;
 }
 
 .span-two {
@@ -37,22 +48,58 @@ body {
 
 .output {
   grid-column: 1 / -1;
-  background-color: rgba(0, 0, 0, .75);
+  background-color: #FFFFFF;
+  color: #4A4A4A;
   display: flex;
   align-items: flex-end;
-  justify-content: space-around;
+  justify-content: flex-end;
   flex-direction: column;
   padding: 10px;
-  word-wrap: break-word;
-  word-break: break-all;
+  border-radius: 4px;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  font-size: 2.5rem;
+  line-height: 1.2;
+  text-align: right;
+  margin-bottom: 20px;
 }
 
 .output .previous-operand {
-  color: rgba(255, 255, 255, .75);
+  color: #9E9E9E;
   font-size: 1.5rem;
+  margin-bottom: 5px;
 }
 
 .output .current-operand {
-  color: white;
-  font-size: 2.5rem;
+  color: #4A4A4A;
+  font-weight: 700;
+}
+
+.clear {
+  background-color: #FF5252;
+  color: #FFFFFF;
+  font-size: 1.2rem;
+  border-radius: 4px;
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.clear:hover {
+  background-color: #F44336;
+}
+
+
+@media (max-width: 768px) {
+  .calculator-grid {
+    grid-template-columns: repeat(4, 60px);
+    grid-template-rows: minmax(100px, auto) repeat(5, 60px);
+    margin: 20px auto;
+  }
+  
+  .output {
+    font-size: 2rem;
+  }
 }
