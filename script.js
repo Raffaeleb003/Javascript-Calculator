@@ -120,6 +120,7 @@ const currentOperandTextElement = document.querySelector('[data-current-operand]
 
 const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
 
+// Event Listeners for Buttons
 numberButtons.forEach(button => {
   button.addEventListener('click', () => {
     calculator.appendNumber(button.innerText)
@@ -147,4 +148,32 @@ allClearButton.addEventListener('click', button => {
 deleteButton.addEventListener('click', button => {
   calculator.delete()
   calculator.updateDisplay()
+})
+
+// Keyboard Support
+document.addEventListener('keydown', event => {
+  if (event.key >= 0 && event.key <= 9) {
+    calculator.appendNumber(event.key)
+    calculator.updateDisplay()
+  } else if (event.key === '+' || event.key === '-' || event.key === '*' || event.key === '/') {
+    calculator.chooseOperation(event.key)
+    calculator.updateDisplay()
+  } else if (event.key === 'Enter' || event.key === '=') {
+    calculator.compute()
+    calculator.updateDisplay()
+  } else if (event.key === 'Backspace') {
+    calculator.delete()
+    calculator.updateDisplay()
+  } else if (event.key === 'Escape') {
+    calculator.clear()
+    calculator.updateDisplay()
+  }
+})
+
+document.addEventListener('keydown', event => {
+  if (event.key === 'Enter') {
+    event.preventDefault()
+    calculator.compute()
+    calculator.updateDisplay()
+  }
 })
