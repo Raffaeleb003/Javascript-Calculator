@@ -1,111 +1,84 @@
-function add(a, b) {
-  return a + b;
-}
+// Basic arithmetic operations
+const add = (a, b) => a + b;
+const subtract = (a, b) => a - b;
+const multiply = (a, b) => a * b;
+const divide = (a, b) => a / b;
 
-function subtract(a, b) {
-  return a - b;
-}
-
-function multiply(a, b) {
-  return a * b;
-}
-
-function divide(a, b) {
-  return a / b;
-}
-
-function operate(operator, a, b) {
-  switch (operator) {
-    case '+':
-      return add(a, b);
-    case '-':
-      return subtract(a, b);
-    case '*':
-      return multiply(a, b);
-    case '÷':
-      return divide(a, b);
-    default:
-      return null;
-  }
-}
+// Perform arithmetic operation based on operator
+const operate = (operator, a, b) => {
+  const operations = {
+    '+': add,
+    '-': subtract,
+    '*': multiply,
+    '÷': divide,
+  };
+  const operationFunc = operations[operator];
+  return operationFunc(a, b);
+};
 
 class Calculator {
   constructor(previousOperandTextElement, currentOperandTextElement) {
-    this.previousOperandTextElement = previousOperandTextElement
-    this.currentOperandTextElement = currentOperandTextElement
-    this.clear()
+    this.previousOperandTextElement = previousOperandTextElement;
+    this.currentOperandTextElement = currentOperandTextElement;
+    this.clear();
   }
 
   clear() {
-    this.currentOperand = ''
-    this.previousOperand = ''
-    this.operation = undefined
+    this.currentOperand = '';
+    this.previousOperand = '';
+    this.operation = undefined;
   }
 
   delete() {
-    this.currentOperand = this.currentOperand.toString().slice(0, -1)
+    this.currentOperand = this.currentOperand.toString().slice(0, -1);
   }
 
   appendNumber(number) {
-    if (number === '.' && this.currentOperand.includes('.')) return
-    this.currentOperand = this.currentOperand.toString() + number.toString()
+    if (number === '.' && this.currentOperand.includes('.')) return;
+    this.currentOperand += number.toString();
   }
 
   chooseOperation(operation) {
-    if (this.currentOperand === '') return
+    if (this.currentOperand === '') return;
     if (this.previousOperand !== '') {
-      this.compute()
+      this.compute();
     }
-    this.operation = operation
-    this.previousOperand = this.currentOperand
-    this.currentOperand = ''
-    this.updateDisplay()
+    this.operation = operation;
+    this.previousOperand = this.currentOperand;
+    this.currentOperand = '';
+    this.updateDisplay();
   }
 
   compute() {
-    let computation
-    const prev = parseFloat(this.previousOperand)
-    const current = parseFloat(this.currentOperand)
-    if (isNaN(prev) || isNaN(current)) return
-    computation = operate(this.operation, prev, current);
+    const prev = parseFloat(this.previousOperand);
+    const current = parseFloat(this.currentOperand);
+    if (isNaN(prev) || isNaN(current)) return;
+    let computation = operate(this.operation, prev, current);
     if (!isFinite(computation)) {
-      alert("Division by zero is not allowed.");
+      alert('Division by zero is not allowed.');
       this.currentOperand = '';
       return [this.previousOperand, this.currentOperand, this.operation];
     } else {
-      this.currentOperand = computation
-      this.operation = undefined
-      this.previousOperand = ''
+      this.currentOperand = computation;
+      this.operation = undefined;
+      this.previousOperand = '';
       return [this.previousOperand, this.currentOperand, this.operation];
     }
   }
 
   getDisplayNumber(number) {
-    const stringNumber = number.toString()
-    const integerDigits = parseFloat(stringNumber.split('.')[0])
-    const decimalDigits = stringNumber.split('.')[1]
-    let integerDisplay
-    if (isNaN(integerDigits)) {
-      integerDisplay = ''
-    } else {
-      integerDisplay = integerDigits.toLocaleString('en', { maximumFractionDigits: 0 })
-    }
-    if (decimalDigits != null) {
-      return `${integerDisplay}.${decimalDigits}`
-    } else {
-      return integerDisplay
-    }
+    const stringNumber = number.toString();
+    const integerDigits = parseFloat(stringNumber.split('.')[0]);
+    const decimalDigits = stringNumber.split('.')[1];
+    let integerDisplay = isNaN(integerDigits) ? '' : integerDigits.toLocaleString('en', { maximumFractionDigits: 0 });
+    return decimalDigits != null ? `${integerDisplay}.${decimalDigits}` : integerDisplay;
   }
 
   updateDisplay() {
-    this.currentOperandTextElement.innerText =
-      this.getDisplayNumber(this.currentOperand)
-    if (this.operation != null) {
-      this.previousOperandTextElement.innerText =
-        `${this.getDisplayNumber(this.previousOperand)} ${this.operation}`
-    } else {
-      this.previousOperandTextElement.innerText = ''
-    }
+    this.currentOperandTextElement.innerText = this.getDisplayNumber(this.currentOperand);
+    this.operation != null ?
+      this.previousOperandTextElement.innerText = `${this.getDisplayNumber(this.previousOperand)} ${this.operation}` :
+      this.previousOperandTextElement.innerText = '';
   }
 }
 
