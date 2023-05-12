@@ -1,10 +1,8 @@
-// Basic arithmetic operations
 const add = (a, b) => a + b;
 const subtract = (a, b) => a - b;
 const multiply = (a, b) => a * b;
 const divide = (a, b) => a / b;
 
-// Perform arithmetic operation based on operator
 const operate = (operator, a, b) => {
   const operations = {
     '+': add,
@@ -93,7 +91,7 @@ const currentOperandTextElement = document.querySelector('[data-current-operand]
 
 const calculator = new Calculator(previousOperandTextElement, currentOperandTextElement)
 
-// Event Listeners for Buttons
+
 numberButtons.forEach(button => {
   button.addEventListener('click', () => {
     calculator.appendNumber(button.innerText)
@@ -123,7 +121,6 @@ deleteButton.addEventListener('click', button => {
   calculator.updateDisplay()
 })
 
-// Keyboard Support
 document.addEventListener('keydown', event => {
   if (event.key >= 0 && event.key <= 9) {
     calculator.appendNumber(event.key)
