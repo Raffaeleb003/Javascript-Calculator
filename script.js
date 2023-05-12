@@ -1,35 +1,40 @@
+function add(a, b) {
+  return a + b;
+}
+
+function subtract(a, b) {
+  return a - b;
+}
+
+function multiply(a, b) {
+  return a * b;
+}
+
+function divide(a, b) {
+  return a / b;
+}
+
+function operate(operator, a, b) {
+  switch (operator) {
+    case '+':
+      return add(a, b);
+    case '-':
+      return subtract(a, b);
+    case '*':
+      return multiply(a, b);
+    case '÷':
+      return divide(a, b);
+    default:
+      return null;
+  }
+}
+
 class Calculator {
   constructor(previousOperandTextElement, currentOperandTextElement) {
     this.previousOperandTextElement = previousOperandTextElement
     this.currentOperandTextElement = currentOperandTextElement
     this.clear()
-    document.addEventListener('keydown', this.handleKeyDown.bind(this))
-}
-
-handleKeyDown(event) {
-  const { key } = event
-  if (/\d/.test(key)) {
-    // Number keys
-    this.appendNumber(key)
-    this.updateDisplay()
-  } else if (/[+\-*/]/.test(key)) {
-    // Operation keys
-    this.chooseOperation(key)
-    this.updateDisplay()
-  } else if (key === 'Enter' || key === '=') {
-    // Equals key
-    this.compute()
-    this.updateDisplay()
-  } else if (key === 'Backspace') {
-    // Delete key
-    this.delete()
-    this.updateDisplay()
-  } else if (key === 'Escape' || key === 'AC') {
-    // All clear key
-    this.clear()
-    this.updateDisplay()
   }
-}
 
   clear() {
     this.currentOperand = ''
@@ -54,6 +59,7 @@ handleKeyDown(event) {
     this.operation = operation
     this.previousOperand = this.currentOperand
     this.currentOperand = ''
+    this.updateDisplay()
   }
 
   compute() {
@@ -61,56 +67,16 @@ handleKeyDown(event) {
     const prev = parseFloat(this.previousOperand)
     const current = parseFloat(this.currentOperand)
     if (isNaN(prev) || isNaN(current)) return
-    switch (this.operation) {
-      case '+':
-        computation = this.add(prev, current)
-        break
-      case '-':
-        computation = this.subtract(prev, current)
-        break
-      case '*':
-        computation = this.multiply(prev, current)
-        break
-      case '÷':
-        computation = this.divide(prev, current)
-        break
-      default:
-        return
-    }
-    this.currentOperand = computation
-    this.operation = undefined
-    this.previousOperand = ''
-  }
-
-  add(a, b) {
-    return a + b
-  }
-
-  subtract(a, b) {
-    return a - b
-  }
-
-  multiply(a, b) {
-    return a * b
-  }
-
-  divide(a, b) {
-    if (b === 0) return 'Error'
-    return a / b
-  }
-
-  operate(operator, a, b) {
-    switch (operator) {
-      case '+':
-        return this.add(a, b)
-      case '-':
-        return this.subtract(a, b)
-      case '*':
-        return this.multiply(a, b)
-      case '÷':
-        return this.divide(a, b)
-      default:
-        return 'Error'
+    computation = operate(this.operation, prev, current);
+    if (!isFinite(computation)) {
+      alert("Division by zero is not allowed.");
+      this.currentOperand = '';
+      return [this.previousOperand, this.currentOperand, this.operation];
+    } else {
+      this.currentOperand = computation
+      this.operation = undefined
+      this.previousOperand = ''
+      return [this.previousOperand, this.currentOperand, this.operation];
     }
   }
 
