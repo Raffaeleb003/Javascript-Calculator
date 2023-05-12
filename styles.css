@@ -1,18 +1,15 @@
-/* New font family */
 *, *::before, *::after {
   box-sizing: border-box;
   font-family: 'Montserrat', sans-serif;
   font-weight: normal;
 }
 
-/* New background gradient */
 body {
   padding: 0;
   margin: 0;
-  background: linear-gradient(to right, #FFC947, #F47C54);
+  background: linear-gradient(to bottom, #f2f2f2, #d8d8d8, #b5b5b5, #3c3c3c);
 }
 
-/* New grid layout with smaller button sizes */
 .calculator-grid {
   display: grid;
   justify-content: center;
@@ -41,12 +38,10 @@ body {
   color: #F2F2F2;
 }
 
-/* Span two now spans 2 columns */
 .span-two {
   grid-column: span 2;
 }
 
-/* Output section with new background and font colors */
 .output {
   grid-column: 1 / -1;
   background-color: #3C3C3C;
@@ -73,7 +68,6 @@ body {
 }
 
 @media only screen and (max-width: 768px) {
-  /* Reduce font size and button size */
   .calculator-grid > button {
     font-size: 1.2rem;
     padding: 8px;
@@ -83,7 +77,6 @@ body {
     font-size: 1.2rem;
   }
   
-  /* Adjust grid template rows for smaller screens */
   .calculator-grid {
     grid-template-rows: minmax(100px, auto) repeat(5, 60px);
     gap: 5px;
@@ -91,7 +84,6 @@ body {
 }
 
 @media only screen and (max-width: 480px) {
-  /* Further reduce font size and button size */
   .calculator-grid > button {
     font-size: 1rem;
     padding: 6px;
@@ -101,7 +93,6 @@ body {
     font-size: 1rem;
   }
   
-  /* Adjust grid template rows for even smaller screens */
   .calculator-grid {
     grid-template-rows: minmax(80px, auto) repeat(5, 50px);
     gap: 2px;
