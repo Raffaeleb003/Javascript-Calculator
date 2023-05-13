@@ -21,22 +21,22 @@ class Calculator {
     this.clear();
   }
 
-  clear() {
+  clear = () => {
     this.currentOperand = '';
     this.previousOperand = '';
     this.operation = undefined;
   }
 
-  delete() {
+  delete = () => {
     this.currentOperand = this.currentOperand.toString().slice(0, -1);
   }
 
-  appendNumber(number) {
+  appendNumber = (number) => {
     if (number === '.' && this.currentOperand.includes('.')) return;
     this.currentOperand += number.toString();
   }
 
-  chooseOperation(operation) {
+  chooseOperation = (operation) => {
     if (this.currentOperand === '') return;
     if (this.previousOperand !== '') {
       this.compute();
@@ -47,7 +47,7 @@ class Calculator {
     this.updateDisplay();
   }
 
-  compute() {
+  compute = () => {
     const prev = parseFloat(this.previousOperand);
     const current = parseFloat(this.currentOperand);
     if (isNaN(prev) || isNaN(current)) return;
@@ -64,7 +64,7 @@ class Calculator {
     }
   }
 
-  getDisplayNumber(number) {
+  getDisplayNumber = (number) => {
     const stringNumber = number.toString();
     const integerDigits = parseFloat(stringNumber.split('.')[0]);
     const decimalDigits = stringNumber.split('.')[1];
@@ -72,11 +72,11 @@ class Calculator {
     return decimalDigits != null ? `${integerDisplay}.${decimalDigits}` : integerDisplay;
   }
 
-  updateDisplay() {
+  updateDisplay = () => {
     this.currentOperandTextElement.innerText = this.getDisplayNumber(this.currentOperand);
-    this.operation != null ?
-      this.previousOperandTextElement.innerText = `${this.getDisplayNumber(this.previousOperand)} ${this.operation}` :
-      this.previousOperandTextElement.innerText = '';
+    this.previousOperandTextElement.innerText = this.operation != null ?
+      `${this.getDisplayNumber(this.previousOperand)} ${this.operation}` :
+      '';
   }
 }
 
